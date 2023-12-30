@@ -1,14 +1,13 @@
-import mysql.connector
+
 import datetime
 import hashlib
+import usuarios.conexion as conexion
 
-con = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "Madrid_2014",
-    database = "database_aplicacion",
-    port = 3306)
-cursor = con.cursor(buffered=True)
+conect = conexion.conectar()
+database = conect[0]
+cursor = conect[1]
+
+
 
 class Usuario:
     def __init__(self, nombre, apellidos, email, password):
@@ -28,9 +27,9 @@ class Usuario:
         usuario = (self.nombre, self.apellidos, self.email, cifrado.hexdigest(), fecha)
         try:
             cursor.execute(sql, usuario)
-            con.commit()
+            database.commit()
             result = [cursor.rowcount, self]
-        except mysql.connector.errors.IntegrityError:
+        except:
             result = [0, self]
         return result
     
