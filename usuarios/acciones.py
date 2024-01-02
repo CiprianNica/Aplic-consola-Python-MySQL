@@ -19,5 +19,15 @@ class Acciones:
         
     def login(self):
         print("\nvale, identificate en el sistema...")
+        
         email = input("tu email: ")
         password = input("tu contraseña: ")
+        
+        usuario = modelo.Usuario('', '', email, password)
+        login = usuario.identificar()
+        
+        if email == login[3]:
+            print(f"bienveido {login[1]}, te has registrado en el sist el {login[5]}")
+        else:
+            print("no hay este usuario...")
+        print(login)
