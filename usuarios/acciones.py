@@ -1,4 +1,5 @@
 import usuarios.usuario as modelo
+from usuarios.errores import ErrorPassword, ErrorEmail
 
 class Acciones:
     
@@ -19,15 +20,15 @@ class Acciones:
         
     def login(self):
         print("\nvale, identificate en el sistema...")
-        
+        #try:
         email = input("tu email: ")
         password = input("tu contraseña: ")
-        
+                
         usuario = modelo.Usuario('', '', email, password)
         login = usuario.identificar()
-        
-        if email == login[3]:
-            print(f"bienveido {login[1]}, te has registrado en el sist el {login[5]}")
+        if login != None:
+            print("Login exitoso!!")
         else:
-            print("no hay este usuario...")
-        print(login)
+            print("Error, email o password incorrectos.")            
+    def proximasAcciones(self, usuario):
+        return None
