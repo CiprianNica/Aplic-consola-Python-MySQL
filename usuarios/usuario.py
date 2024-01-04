@@ -35,17 +35,14 @@ class Usuario:
     
     def identificar(self):
         # consulta si existe el usuario:
-        sql = "SELECT * FROM usuarios WHERE email = %s AND password = %s"
+        sql = "SELECT * FROM usuarios WHERE email = %s AND (password = %s OR password = %s)"
         
         #cifrar contraseña
-        if len(self.password) <= 5:
-            #datos para la consulta
-            usuario = (self.email, self.password)
-        else:
-            cifrado = hashlib.sha256()
-            cifrado.update(self.password.encode("utf8"))
-            #datos para la consulta
-            usuario = (self.email, cifrado.hexdigest())
+        cifrado = hashlib.sha256()
+        cifrado.update(self.password.encode("utf8"))
+        #datos para la consulta
+        
+        usuario = (self.email, cifrado.hexdigest(), self.password)
         #consulta
         cursor.execute(sql, usuario)
         result = cursor.fetchone()
